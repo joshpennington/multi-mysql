@@ -1,0 +1,50 @@
+version: '3.1'
+
+services: 
+  mysql57:
+    container_name: 'mysql57'
+    build: "mysql5.7/"
+    ports: 
+      - '3306:3306'
+    volumes: 
+      - mysql57data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: Passw0rd
+      MYSQL_USER: user
+      MYSQL_PASSWORD: Passw0rd
+    restart: unless-stopped
+  mysql56:
+    container_name: 'mysql56'
+    build: "mysql5.6/"
+    ports: 
+      - '3305:3306'
+    volumes: 
+      - mysql56data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: Passw0rd
+      MYSQL_USER: user
+      MYSQL_PASSWORD: Passw0rd
+    restart: unless-stopped
+  mariadb105:
+    container_name: 'mariadb105'
+    image: mariadb:10.5-focal
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: Passw0rd
+    volumes:
+      - mariadb105data:/var/lib/mysql
+    ports:
+      - "3304:3306"
+
+volumes:
+  mysql57data:
+    driver: "local"
+  mysql56data:
+    driver: "local"
+  mariadb105data:
+    driver: "local"
+
+networks:
+  default:
+    external:
+      name: dockernet
